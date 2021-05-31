@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div id="content" v-on:load="load()">
+    <div id="content">
       <h1>Meine TODO-Liste</h1>
       <div id="form">
         <div id="aufgabe">
@@ -23,11 +23,6 @@
       </div>
       <div id="result">
         <table id="resultTable">
-          <tr>
-            <th id="ag">Aufgabe</th>
-            <th id="bi">bis</th>
-            <th id="ka">Kategorie</th>
-          </tr>
         </table>
       </div>  
       <div id="footer">
@@ -49,66 +44,146 @@
         let aufgabe = document.getElementById("aufgabe_in") as HTMLInputElement
         let erledigt = document.getElementById("erledigt_in") as HTMLInputElement
         let kategorie = document.getElementById("kategorie_in") as HTMLSelectElement
-        let target = document.getElementById("resultTable") as HTMLTableElement
 
-        let row = document.createElement("tr")
-        let ag = document.createElement("td")
-        let er = document.createElement("td")
-        let ka = document.createElement("td")
+        
 
-        //border-style: solid
-        //border-width: thin
-        //border-color: grey
-
-        ag.innerHTML = aufgabe.value
-        ag.style.padding = "0.4em"
-        ag.style.paddingLeft = "0.6em"
-        ag.style.borderStyle = "solid"
-        ag.style.borderWidth = "thin"
-        ag.style.borderColor = "grey"
-        er.innerHTML = erledigt.value
-        er.style.padding = "0.4em"
-        er.style.paddingLeft = "0.6em"
-        er.style.borderStyle = "solid"
-        er.style.borderWidth = "thin"
-        er.style.borderColor = "grey"
-        ka.innerHTML = kategorie.value
-        ka.style.padding = "0.4em"
-        ka.style.paddingLeft = "0.6em"
-        ka.style.borderStyle = "solid"
-        ka.style.borderWidth = "thin"
-        ka.style.borderColor = "grey"
-
-        if (ag.innerHTML == "") {
-          ag.innerHTML = "default"
+        if (!aufgabe.value.trim().length) {
+          aufgabe.value = "default"
         }
-        if (er.innerHTML == "") {
-          er.innerHTML = "default"
+        if (!erledigt.value.trim().length) {
+          erledigt.value = new Date().toString()
         }
 
-        row.appendChild(ag)
-        row.appendChild(er)
-        row.appendChild(ka)
+        interface rowMow {
+            ag: string;
+            er: string;
+            ka: string;
+         }
 
-        target.appendChild(row)
+        let result: rowMow = {
+            ag: aufgabe.value,
+            er: erledigt.value,
+            ka: kategorie.value
+        }
+        
+
+        let mi = sessionStorage.getItem("si")
+        let li: object[] = []
+
+        if (mi != null) {
+          li = JSON.parse(mi)
+        }
+
+        li.push(result)
+
+        sessionStorage.clear()
+
+        sessionStorage.setItem("si", JSON.stringify(li))
+
+        this.loadRows()
+
+        // target.appendChild(row)
         console.log("saved")
         
       },
-      load: function() {
-        let li = [];
+      loadRows: function() { 
+        
+         interface rowMow {
+            ag: string;
+            er: string;
+            ka: string;
+         }
+        
+        let li: rowMow[] = [];
         let mi = ""
-        let sg = localStorage
+        let sg = sessionStorage
         let target = document.getElementById("resultTable") as HTMLTableElement
 
-        if (sg.getItem("si")) {
+        let h = document.createElement("tr")
+        let h1 = document.createElement("th")
+        let h2 = document.createElement("th")
+        let h3 = document.createElement("th")
+
+        h1.innerHTML = "Aufgabe"
+        h1.id = "ag"
+        h1.style.borderStyle = "solid"
+        h1.style.borderWidth = "thin"
+        h1.style.borderColor = "grey"
+        h1.style.backgroundColor = "#53777A"
+        h1.style.color = "white"
+        h1.style.fontWeight = "normal"
+        h1.style.padding = "0.5em"
+        h1.style.width = "55%"
+
+        h2.innerHTML = "bis"
+        h2.id = "bi"
+        h2.style.borderStyle = "solid"
+        h2.style.borderWidth = "thin"
+        h2.style.borderColor = "grey"
+        h2.style.backgroundColor = "#53777A"
+        h2.style.color = "white"
+        h2.style.fontWeight = "normal"
+        h2.style.padding = "0.5em"
+        h2.style.width = "22.5%"
+
+        h3.innerHTML = "Kategorie"
+        h3.id = "ka"
+        h3.style.borderStyle = "solid"
+        h3.style.borderWidth = "thin"
+        h3.style.borderColor = "grey"
+        h3.style.backgroundColor = "#53777A"
+        h3.style.color = "white"
+        h3.style.fontWeight = "normal"
+        h3.style.padding = "0.5em"
+        h3.style.width = "22.5%"
+
+        h.appendChild(h1)
+        h.appendChild(h2)
+        h.appendChild(h3)
+
+        target.innerHTML = ""
+        target.appendChild(h)
+
+        if (sg.getItem("si") != null) {
           mi = sg.getItem("si") as string
           li = JSON.parse(mi)
         }
 
-        li.forEach((element: HTMLTableRowElement) => {
-          target.appendChild(element)
+        li.forEach(obj => {
+          let row = document.createElement("tr")
+          let ag = document.createElement("td")
+          let er = document.createElement("td")
+          let ka = document.createElement("td")
+
+          ag.innerHTML = obj.ag
+          ag.style.padding = "0.4em"
+          ag.style.paddingLeft = "0.6em"
+          ag.style.borderStyle = "solid"
+          ag.style.borderWidth = "thin"
+          ag.style.borderColor = "grey"
+          er.innerHTML = obj.er
+          er.style.padding = "0.4em"
+          er.style.paddingLeft = "0.6em"
+          er.style.borderStyle = "solid"
+          er.style.borderWidth = "thin"
+          er.style.borderColor = "grey"
+          ka.innerHTML = obj.ka
+          ka.style.padding = "0.4em"
+          ka.style.paddingLeft = "0.6em"
+          ka.style.borderStyle = "solid"
+          ka.style.borderWidth = "thin"
+          ka.style.borderColor = "grey"
+
+          row.appendChild(ag)
+          row.appendChild(er)
+          row.appendChild(ka)
+
+          target.appendChild(row)
         });
       }
+    },
+    mounted() {
+      this.loadRows()
     }    
   })
 
@@ -172,7 +247,7 @@ $sec-color: #53777A
       align-self: center
       margin: auto
 
-table, th, td, tr
+table, tr
     border-style: solid
     border-width: thin
     border-color: grey
@@ -188,13 +263,4 @@ th
   color: white
   font-weight: normal
   padding: 0.5em
-
-#ag
-  width: 55%
-
-#bi
-  width: 22.5%  
-
-#ka
-  width: 22.5%
 </style>
