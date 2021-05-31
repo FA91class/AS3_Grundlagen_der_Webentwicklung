@@ -1,5 +1,8 @@
 <template>
-  <HelloWorld />
+  <bootstrap-vue>
+    <icons-plugin />
+    <HelloWorld />  
+  </bootstrap-vue>  
 </template>
 
 <script lang="ts">
@@ -10,15 +13,15 @@ import HelloWorld from './components/HelloWorld.vue';
 @Options({
   components: {
     HelloWorld,
+    BootstrapVue,
+    IconsPlugin
   },
 })
 export default class App extends Vue {}
+
 </script>
 
 <style lang="sass">
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-
   #app 
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

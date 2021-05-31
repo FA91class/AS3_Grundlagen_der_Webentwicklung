@@ -1,4 +1,5 @@
 <template>
+<bootstrap-vue>
   <form action="save()">
     <h1>Meine TODO-Liste</h1>
     <div id="aufgabe">
@@ -18,12 +19,17 @@
       </select>
     </div>
   </form>
+</bootstrap-vue>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
+import { BootstrapVue } from 'bootstrap-vue'
 
 @Options({
+  components: {
+    BootstrapVue
+  },
   props: {
     msg: String
   }
