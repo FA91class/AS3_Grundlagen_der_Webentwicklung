@@ -1,26 +1,26 @@
 <template>
   <v-container>
-    <div id="content">
+    <div id="content" v-on:load="load()">
       <h1>Meine TODO-Liste</h1>
-      <form action="save()" id="form">
+      <div id="form">
         <div id="aufgabe">
           <label for="aufgabe">Aufgabe</label>
-          <input type="text" name="aufgabe" placeholder="Do Be Do Be Do" >
+          <input type="text" id="aufgabe_in" name="aufgabe" placeholder="Do Be Do Be Do" >
         </div>
         <div id="erledigt_bis">
           <label for="erledigt">erledigt bis</label>
-          <input type="date" name="erledigt" >
+          <input type="date" id="erledigt_in" name="erledigt" >
         </div>
         <div id="kategorie">
           <label for="kategorie">Kategorie</label>
-          <select name="kategorie">
+          <select name="kategorie" id="kategorie_in">
             <option value="Privat" selected>Privat</option>
             <option value="Arbeit">Arbeit</option>
             <option value="Schule">Schule</option>
           </select>
         </div>
-        <button onclick="save()" id="save">Aufgabe Speichern</button>
-      </form>
+        <button id="save" v-on:click="save()">Aufgabe Speichern</button>
+      </div>
       <div id="result">
         <table id="resultTable">
           <tr>
@@ -43,8 +43,76 @@
 
   export default Vue.extend({
     name: 'HelloWorld',
+    methods: {
+      save: function() {
 
+        let aufgabe = document.getElementById("aufgabe_in") as HTMLInputElement
+        let erledigt = document.getElementById("erledigt_in") as HTMLInputElement
+        let kategorie = document.getElementById("kategorie_in") as HTMLSelectElement
+        let target = document.getElementById("resultTable") as HTMLTableElement
+
+        let row = document.createElement("tr")
+        let ag = document.createElement("td")
+        let er = document.createElement("td")
+        let ka = document.createElement("td")
+
+        //border-style: solid
+        //border-width: thin
+        //border-color: grey
+
+        ag.innerHTML = aufgabe.value
+        ag.style.padding = "0.4em"
+        ag.style.paddingLeft = "0.6em"
+        ag.style.borderStyle = "solid"
+        ag.style.borderWidth = "thin"
+        ag.style.borderColor = "grey"
+        er.innerHTML = erledigt.value
+        er.style.padding = "0.4em"
+        er.style.paddingLeft = "0.6em"
+        er.style.borderStyle = "solid"
+        er.style.borderWidth = "thin"
+        er.style.borderColor = "grey"
+        ka.innerHTML = kategorie.value
+        ka.style.padding = "0.4em"
+        ka.style.paddingLeft = "0.6em"
+        ka.style.borderStyle = "solid"
+        ka.style.borderWidth = "thin"
+        ka.style.borderColor = "grey"
+
+        if (ag.innerHTML == "") {
+          ag.innerHTML = "default"
+        }
+        if (er.innerHTML == "") {
+          er.innerHTML = "default"
+        }
+
+        row.appendChild(ag)
+        row.appendChild(er)
+        row.appendChild(ka)
+
+        target.appendChild(row)
+        console.log("saved")
+        
+      },
+      load: function() {
+        let li = [];
+        let mi = ""
+        let sg = localStorage
+        let target = document.getElementById("resultTable") as HTMLTableElement
+
+        if (sg.getItem("si")) {
+          mi = sg.getItem("si") as string
+          li = JSON.parse(mi)
+        }
+
+        li.forEach((element: HTMLTableRowElement) => {
+          target.appendChild(element)
+        });
+      }
+    }    
   })
+
+  
 </script>
 
 <style lang="sass" scoped>
@@ -58,7 +126,7 @@ $sec-color: #53777A
   border-width: thin 
   border-color: lightgrey
 
-  form
+  #form
     padding: 1.5rem
 
     input, select, button
@@ -86,26 +154,6 @@ $sec-color: #53777A
       background-color: $sec-color
       color: white
 
-  table, tr, th, td
-    border-style: solid
-    border-width: thin
-    border-color: grey
-
-  table
-    border-collapse: collapse
-    width: 35rem
-    margin: 2rem
-
-    th
-      background-color: $sec-color
-      color: white
-      font-weight: normal
-      padding: 0.5em
-
-    td
-      padding: 0.4em
-      padding-left: 0.6em
-
   h1
     padding-top: 1.5rem
     font-size: 1.8rem
@@ -123,4 +171,30 @@ $sec-color: #53777A
       height: 3em
       align-self: center
       margin: auto
+
+table, th, td, tr
+    border-style: solid
+    border-width: thin
+    border-color: grey
+
+table
+  border-collapse: collapse
+  width: 36rem
+  margin: 1.5rem
+  margin-bottom: 3rem
+
+th
+  background-color: $sec-color
+  color: white
+  font-weight: normal
+  padding: 0.5em
+
+#ag
+  width: 55%
+
+#bi
+  width: 22.5%  
+
+#ka
+  width: 22.5%
 </style>
