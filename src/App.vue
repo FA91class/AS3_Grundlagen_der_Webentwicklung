@@ -1,9 +1,10 @@
 <template>
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <HelloWorld />
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import HelloWorld from './components/HelloWorld.vue';
 
 @Options({
@@ -14,13 +15,20 @@ import HelloWorld from './components/HelloWorld.vue';
 export default class App extends Vue {}
 </script>
 
+<style lang="sass">
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+  #app 
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+
+</style>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
