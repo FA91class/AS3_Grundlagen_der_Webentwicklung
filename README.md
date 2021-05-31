@@ -1,4 +1,4 @@
-# web-grundlagen
+# web-basics
 
 ## Project setup
 ```

@@ -1,37 +1,28 @@
 <template>
-  <bootstrap-vue>
-    <icons-plugin />
-    <HelloWorld />  
-  </bootstrap-vue>  
+  <div id="app">
+    <img alt="Vue logo" src="./assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  </div>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
-import HelloWorld from './components/HelloWorld.vue';
+<script>
+import HelloWorld from './components/HelloWorld.vue'
 
-@Options({
+export default {
+  name: 'App',
   components: {
-    HelloWorld,
-    BootstrapVue,
-    IconsPlugin
-  },
-})
-export default class App extends Vue {}
-
+    HelloWorld
+  }
+}
 </script>
 
-<style lang="sass">
-  #app 
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-
-</style>
-
 <style>
-
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
 </style>
