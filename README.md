@@ -1,5 +1,7 @@
 # web-basics
 
+![build status](https://travis-ci.com/FA91class/AS3_Grundlagen_der_Webentwicklung.svg?branch=master)
+
 ## Project setup
 ```
 npm install
