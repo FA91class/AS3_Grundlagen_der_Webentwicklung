@@ -10,13 +10,7 @@ deploy:
  provider: pages
  skip_cleanup: true
  github_token: $GITHUB_TOKEN
- edge: true
+# edge: true
  local_dir: dist
  on:
    branch: master
-
-default: &default
-  source_path: app/javascript
-  #source_entry_path: ./
-  public_root_path: dist
-  public_output_path: dist
