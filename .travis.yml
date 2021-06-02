@@ -14,3 +14,9 @@ deploy:
  local_dir: dist
  on:
    branch: master
+
+default: &default
+  source_path: app/javascript
+  #source_entry_path: ./
+  public_root_path: dist
+  public_output_path: dist
